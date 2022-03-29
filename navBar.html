@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="/index.html">Accueil</a>
+        <a class="nav-link" href="/register.html">Nouvel utilisateur</a>
+        <a class="nav-link" href="/modified.html">Mon profil</a>
+        <a class="nav-link" href="/roles/read.html">Liste des rôles</a>
+        <a class="nav-link" href="/roles/create.html">Créer un rôle</a>
+        <?php if(isset($_SESSION['user'])) :?>
+          <a class="nav-link" href="/logout.html">Se déconnecter</a>
+          <?php else: ?>
+            <a class="nav-link" href="/login.html">Se connecter</a>
+        <?php endif; ?>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<?php if(isset($_SESSION['flashMsg'])): ?>
+<div class="alert alert-primary alert-dismissible fade show" role="alert">
+  <?php echo $_SESSION['flashMsg'] ?>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<?php
+//unset permet de supprimer un index du tableau 
+unset($_SESSION['flashMsg']);
+endif; ?>

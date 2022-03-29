@@ -1,0 +1,30 @@
+<?php
+/**
+ * Permet de se déconnecter du site
+ * - Activer la session
+ * - Supprimer du tableau session notre index 'user'
+ * si nous ne sommes plus dans le tableau $_SESSION alors on 
+ * sera considéré comme déconnecté
+ * - Ajouter un message flash
+ * - Rediriger vers la page index.html
+ */
+
+ /** Activer la session */
+session_start();
+
+/** On supprime l'index user de tableau $_SESSION */
+unset($_SESSION['user']);
+
+/**
+ * Autre méthode : 
+ * session_destroy() : qui remet à vide le tableau $_SESSION et 
+ * ferme la SESSION
+ * 
+ */
+
+/** Nous ajoutons notre message flash */
+$_SESSION['flashMsg'] = 'vous avez été déconnecté';
+
+/** Redirection */
+header('Location: index.html');
+exit();

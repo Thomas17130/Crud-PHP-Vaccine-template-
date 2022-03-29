@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * -recupérer id en GET
+ * -se connecter à la BDD
+ * -supprimer le role
+ * -rediriger vers read
+ */
+
+//Initialiser notre connexion avec la BDD
+$pdoConnect = new PDO(
+    'mysql:host=localhost;dbname=ecod2022;charset=UTF8',
+    'root'
+);
+
+$req = 'DELETE FROM roles WHERE id = :sql_param_id';
+
+//Préparer notre req
+$stm = $pdoConnect->prepare($req);
+
+//executer notre req
+$stm->execute([
+    'sql_param_id' => $_GET['idrole']
+]);
+
+/** Redirection */
+header('Location: read.html');
+exit();

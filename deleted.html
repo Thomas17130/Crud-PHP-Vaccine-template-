@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * - Se connecter à la BDD + session (connect.php)
+ * - Récupérer id du user à supprimer
+ * - Vérifier que le user connecté puisse le supprimer
+ *      - Il faut que ce soit son compte
+ * - Supprimer ce user
+ * - Logout du user
+ * - Ajouter un message de validation en session
+ * - Redirection vers index (qui affichera ce message)
+ */
+
+require_once('connect.php');
+
+/** Vérification d'avoir un id user dans l'url */
+if (isset($_GET['iduser'])) {
+    /**
+     * Test pour : 
+     * - verifier qu'en session nous avons bien un index user et un id (isset)
+     * - verifier que l'id user en session == l'id user de l'url
+     */
+    if (isset($_SESSION['user']['id']) &&
+     $_SESSION['user']['id'] == $_GET['iduser']) {
+        executeStatement(
+            'DELETE FROM `users` WHERE id = :param_iduser',
+            [
+                'param_iduser' => $_GET['iduser']
+            ]
+        );
+
+        // /** Redirection */
+        header('Location: logout.html');
+        exit();
+    } else {
+        /** Nous ajoutons notre message flash */
+        $_SESSION['flashMsg'] = 'Vous n\'avez pas les droits pour supprimer ce user';
+    }
+} else {
+
+    /** Nous ajoutons notre message flash */
+    $_SESSION['flashMsg'] = 'Vous ne pouvez pas supprimer de user';
+}
+
+var_dump($_SESSION);
+// /** Redirection */
+// header('Location: index.html');
+// exit();
